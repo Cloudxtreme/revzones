@@ -1,0 +1,14 @@
+$ORIGIN .
+$TTL 3600	; 1 hour
+252.177.195.in-addr.arpa	IN SOA	ns0.esgob.co.uk nat.esgob.com (
+				2014061905   ; serial
+                                43200      ; refresh (12 hours)
+                                600        ; retry (10 minutes)
+                                1209600    ; expire (2 weeks)
+                                3600       ; minimum (1 hour)
+				)
+			NS	ns0.esgob.co.uk.
+			NS	ns1.esgob.com.
+			NS	ns2.esgob.com.
+$ORIGIN 252.177.195.in-addr.arpa.
+1			PTR	unassigned.esgob.com.

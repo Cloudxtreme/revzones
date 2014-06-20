@@ -1,0 +1,25 @@
+{
+	"prefixes":
+	[
+		"195.177.252.0/23",
+		"193.47.147.0/24",
+		"91.232.181.0/24",
+		"2001:67c:1b40::/46",
+		"2a04:ec40::/29"
+	],
+	"nameservers":
+	{
+		"master": "ns0.esgob.co.uk",
+		"slaves": [ "ns1.esgob.com", "ns2.esgob.com" ]
+	},
+	"ripe":
+	{
+		"admin-c": "NAT-RIPE",
+		"tech-c": "NAT-RIPE",
+		"zone-c": "NAT-RIPE",
+		"mnt": "NAT-MNT",
+		"org": "ORG-ESGB1-RIPE",
+		"changed": "ripenotify@esgob.com",
+		"notify": "ripe@esgob.com"
+	}
+}
