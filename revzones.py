@@ -50,22 +50,22 @@ def main():
 
     # load templates config
     templatesjson=open("templates/templates.json")
-    tmpldata = json.load(templatesjson)
+    tmpldata = json.load(templatesjson)["templates"]
     templatesjson.close()
 
     tmplchoices = []
-    for tmpl in tmpldata["templates"]:
+    for tmpl in tmpldata:
         tmplchoices.append(tmpl["name"])
 
     # get user input
     parser = argparse.ArgumentParser(description='Reverse zone geneator')
     parser.add_argument('-c', help='configuration filename',action='store',dest='cfgfile',required=True)
     parser.add_argument('-t', help='template', action='store', dest='type', required=True, choices=tmplchoices)
-    parser.add_argument('-o', help='output', action='store', dest='output', required=False, choices=['screen','file'], default='screen')
+    parser.add_argument('-o', help='output', action='store', dest='output', required=False, choices=['screen','files'], default='screen')
     args = parser.parse_args()
 
     # try to load config for prefixes
-    if os.path.isfile(args.cfgfile) == False:
+    if os.path.isfile(args.cfgfile) is False:
         print "Config file does not exist: %s" % (args.cfgfile)
         sys.exit()
 
@@ -80,10 +80,16 @@ def main():
 
     # make sure template exists
     tmplfile = "%s.tmpl" % (args.type)
-    if os.path.isfile("templates/%s" % (tmplfile)) == False:
+    if os.path.isfile("templates/%s" % (tmplfile)) is False:
         print "Template file does not exist: %s" % (args.tmplfile)
         sys.exit()
     tmpl = env.get_template(tmplfile)
+
+    # get settings
+    tmplcfg = None
+    for t in tmpldata:
+        if t["name"] == args.type:
+            tmplcfg = t
 
     # parse subnets, split on bit boundry etc
     subnets = parsesubnets(data["prefixes"])
@@ -94,14 +100,27 @@ def main():
 
     for subnet in subnets:
         content = tmpl.render(data=data, subnet=subnet)
+
         if args.output == "screen":
             print ""
             print content
-            print ""
 
+        elif args.output == "files":
+            # build file name
+            prefix = ""
+            suffix = ""
+            if tmplcfg["fileprefix"] != "":
+                prefix = tmplcfg["fileprefix"]
+            subfile = "output/%s%s%s" % (prefix,subnet["revzonend"],suffix)
+            if not os.path.exists("output"):
+                os.makedirs("output")
+            of = open(subfile,"w")
+            of.write(content)
+            of.close()
+
+    print ""
     return
-
-
+           
 if __name__ == '__main__':
     main()
     exit(0)

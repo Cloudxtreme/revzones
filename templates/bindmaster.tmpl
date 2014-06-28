@@ -1,4 +1,5 @@
 zone "{{ subnet.revzonend }}" {
+	// {{ subnet.net.cidr }}
 	type master;
-	file "{{data.bind.zonedir}}/{{ subnet.revzonend }}";
+	file "{{data.bind.zonedir}}/db.{{ subnet.revzonend }}";
 };

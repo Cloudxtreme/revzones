@@ -1,7 +1,7 @@
 {
 	"templates": [
-		{"name": "bindmaster"},
-		{"name": "bindzone"},
-		{"name": "ripedomain"}
+		{"name": "bindmaster", "fileprefix": "", "filesuffix": ""},
+		{"name": "bindzone", "fileprefix": "db.", "filesuffix": ""},
+		{"name": "ripedomain", "fileprefix": "", "filesuffix": ""}
 	]
 }
