@@ -1,0 +1,27 @@
+{
+	"prefixes":
+	[
+		"185.61.112.0/22",
+		"2a04:ebc0::/29"
+	],
+	"nameservers":
+	{
+		"master": "ns0.esgob.co.uk",
+		"slaves": [ "ns1.esgob.com", "ns2.esgob.com" ]
+	},
+	"ripe":
+	{
+		"adminc": "SMBL-RIPE",
+		"techc": "SMBL-RIPE",
+		"zonec": "SMBL-RIPE",
+		"mnt": "STRUMBLE--MNT",
+		"org": "ORG-SHL11-RIPE",
+		"changed": "ripe@strumble.net",
+		"notify": "ripe@strumble.net"
+	},
+	"bind":
+	{
+		"zonedir": "/etc/bind/dns-master/zones-rev-unsigned",
+		"contact": "noc.esgob.com"
+	}
+}
