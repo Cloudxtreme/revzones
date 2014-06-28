@@ -14,7 +14,7 @@
 		"adminc": "SMBL-RIPE",
 		"techc": "SMBL-RIPE",
 		"zonec": "SMBL-RIPE",
-		"mnt": "STRUMBLE--MNT",
+		"mnt": "STRUMBLE-MNT",
 		"org": "ORG-SHL11-RIPE",
 		"changed": "ripe@strumble.net",
 		"notify": "ripe@strumble.net"
