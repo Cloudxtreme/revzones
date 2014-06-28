@@ -1,0 +1,30 @@
+{
+	"prefixes":
+	[
+		"46.17.208.0/21",
+		"185.23.52.0/22",
+		"185.33.192.0/22",
+		"2a00:c6a0::/32",
+		"2a04:2340::/29"
+	],
+	"nameservers":
+	{
+		"master": "ns1.clearstreamgroup.co.uk",
+		"slaves": [ "ns2.clearstreamgroup.co.uk" ]
+	},
+	"ripe":
+	{
+		"adminc": "CSG-RIPE",
+		"techc": "CSG-RIPE",
+		"zonec": "CSG-RIPE",
+		"mnt": "CSG-MNT",
+		"org": "ORG-CTL25-RIPE",
+		"changed": "nat@esgob.com",
+		"notify": "ripe@clearstreamgroup.co.uk"
+	},
+	"bind":
+	{
+		"zonedir": "/etc/bind/dns-master/zones-rev-unsigned",
+		"contact": "noc.clearstreamgroup.co.uk"
+	}
+}
