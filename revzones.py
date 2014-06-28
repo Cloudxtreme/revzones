@@ -1,7 +1,17 @@
 #! /usr/bin/env python
 
-import netaddr
+import argparse
 import jinja2
+import json
+import netaddr
+import os
+from pprint import pprint
+import sys
+import string
+
+def checkdata(data):
+    # TODO
+    return
 
 def checksubnets(src):
     nets = []
@@ -14,30 +24,53 @@ def checksubnets(src):
         if ip != None:
             if ip.version == 4:
                 for subnet in list(ip.subnet(24)):
-                    nets.append(subnet)
+                    s = { "net": subnet, "revzone": subnet[0].reverse_dns[2:] }
+                    nets.append(s)
             if ip.version == 6:
                 pl = ip.prefixlen
                 while pl % 4 != 0:
                     pl = pl + 1
                 for subnet in list(ip.subnet(pl)):
-                    nets.append(subnet)
+                    d = 32 - ( subnet.prefixlen / 4 )
+                    rev = string.join(subnet[0].reverse_dns.split(".")[d:],".")
+                    s = { "net": subnet, "revzone": rev }
+                    nets.append(s)
     return nets
 
+def render_bindmaster(data,subnet):
+    net = subnet["net"]
+    # net[0].reverse_dns
+    print subnet["revzone"]
+    #print subnet[0]["net"].reverse_dns
+    return ""
 
 def main():
 
-    src = []
-    src.append("195.177.252.0/23")
-    src.append("193.47.147.0/24")
-    src.append("2a04:ec40::/29")
-    src.append("2001:67c:1b40::/46")
-    src.append("2001:8b0:1200::/48")
+    parser = argparse.ArgumentParser(description='Reverse zone geneator')
+    parser.add_argument('-c', help='configuration filename',action='store',dest='cfgfile',required=True)
+    args = parser.parse_args()
 
-    subnets = checksubnets(src)
+    if os.path.isfile(args.cfgfile) == False:
+        print('Config file specified does not exist')
+        sys.exit()
+
+    json_data=open(args.cfgfile)
+    data = json.load(json_data)
+    json_data.close()
+
+    checkdata(data)
+
+    subnets = checksubnets(data["prefixes"])
+
+#    render_bindmaster(data,subnets[0])
+
+    if len(subnets) == 0:
+        print "No subnets specified"
+        sys.exit()
 
     for subnet in subnets:
-        print ""
-        print subnet
+        #pprint(subnet)
+        render_bindmaster(data,subnet)
       #  print subnet[0].reverse_dns
 
     return
