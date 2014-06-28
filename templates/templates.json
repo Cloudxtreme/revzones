@@ -1,0 +1,7 @@
+{
+	"templates": [
+		{"name": "bindmaster"},
+		{"name": "bindzone"},
+		{"name": "ripedomain"}
+	]
+}

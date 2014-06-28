@@ -1,14 +1,14 @@
 $ORIGIN .
 $TTL 3600	; 1 hour
 {{ subnet.revzonend }}	IN SOA	{{ data.nameservers.master }} {{ data.bind.contact }} (
-				2014061905   ; serial
+				{{ yyyymmdd() }}01   ; serial
                                 43200      ; refresh (12 hours)
                                 600        ; retry (10 minutes)
                                 1209600    ; expire (2 weeks)
                                 3600       ; minimum (1 hour)
 				)
-			NS	{{ data.nameservers.master }}
+							NS	{{ data.nameservers.master }}
 {% for nameserver in data.nameservers.slaves %}
-			NS	{{ nameserver }}
+							NS	{{ nameserver }}
 {% endfor %}
 $ORIGIN {{ subnet.revzone }}
