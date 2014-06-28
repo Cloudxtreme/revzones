@@ -24,7 +24,8 @@ def checksubnets(src):
         if ip != None:
             if ip.version == 4:
                 for subnet in list(ip.subnet(24)):
-                    s = { "net": subnet, "revzone": subnet[0].reverse_dns[2:] }
+                    rev = subnet[0].reverse_dns[2:]
+                    s = { "net": subnet, "revzone": rev, "revzonend": rev[:-1] }
                     nets.append(s)
             if ip.version == 6:
                 pl = ip.prefixlen
@@ -33,16 +34,25 @@ def checksubnets(src):
                 for subnet in list(ip.subnet(pl)):
                     d = 32 - ( subnet.prefixlen / 4 )
                     rev = string.join(subnet[0].reverse_dns.split(".")[d:],".")
-                    s = { "net": subnet, "revzone": rev }
+                    s = { "net": subnet, "revzone": rev, "revzonend": rev[:-1] }
                     nets.append(s)
     return nets
 
-def render_bindmaster(data,subnet):
+def render_bindmaster(env, data, subnet):
+    tmpl = env.get_template("bindmaster.tmpl")
     net = subnet["net"]
-    # net[0].reverse_dns
-    print subnet["revzone"]
-    #print subnet[0]["net"].reverse_dns
-    return ""
+    return tmpl.render(data=data, subnet=subnet)
+
+def render_bindzone(env, data, subnet):
+    tmpl = env.get_template("bindzone.tmpl")
+    net = subnet["net"]
+    return tmpl.render(data=data, subnet=subnet)
+
+def render_ripedomain(env, data, subnet):
+    tmpl = env.get_template("ripedomain.tmpl")
+    net = subnet["net"]
+    return tmpl.render(data=data, subnet=subnet)
+
 
 def main():
 
@@ -60,6 +70,8 @@ def main():
 
     checkdata(data)
 
+    env = jinja2.Environment(loader=jinja2.FileSystemLoader("templates"), trim_blocks=True)
+
     subnets = checksubnets(data["prefixes"])
 
 #    render_bindmaster(data,subnets[0])
@@ -69,9 +81,9 @@ def main():
         sys.exit()
 
     for subnet in subnets:
-        #pprint(subnet)
-        render_bindmaster(data,subnet)
-      #  print subnet[0].reverse_dns
+       # print render_bindmaster(env, data, subnet)
+       # print render_bindzone(env, data, subnet)
+        print render_ripedomain(env, data, subnet)
 
     return
 

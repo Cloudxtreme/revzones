@@ -1,0 +1,14 @@
+domain:         {{ subnet.revzonend }}
+descr:          Reverse zone for {{ subnet.net.cidr }}
+org:            {{ data.ripe.org }}
+admin-c:        {{ data.ripe.adminc }}
+tech-c:         {{ data.ripe.techc }}
+zone-c:         {{ data.ripe.zonec }}
+nserver:        {{ data.nameservers.master }}
+{% for nameserver in data.nameservers.slaves %}
+nserver:        {{ nameserver }}
+{% endfor %}
+notify:         {{ data.ripe.notify }}
+source:         RIPE
+mnt-by:         {{ data.ripe.mnt }}
+changed:        {{ data.ripe.changed }} 20140210

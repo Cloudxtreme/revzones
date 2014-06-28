@@ -4,6 +4,7 @@
 		"195.177.252.0/23",
 		"193.47.147.0/24",
 		"91.232.181.0/24",
+		"185.19.148.0/22",
 		"2001:67c:1b40::/46",
 		"2a04:ec40::/29"
 	],
@@ -14,12 +15,17 @@
 	},
 	"ripe":
 	{
-		"admin-c": "NAT-RIPE",
-		"tech-c": "NAT-RIPE",
-		"zone-c": "NAT-RIPE",
+		"adminc": "NAT-RIPE",
+		"techc": "NAT-RIPE",
+		"zonec": "NAT-RIPE",
 		"mnt": "NAT-MNT",
-		"org": "ORG-ESGB1-RIPE",
+		"org": "ORG-EL223-RIPE",
 		"changed": "ripenotify@esgob.com",
 		"notify": "ripe@esgob.com"
+	},
+	"bind":
+	{
+		"zonedir": "/etc/bind/dns-master/zones-rev-unsigned",
+		"contact": "noc.esgob.com"
 	}
 }
